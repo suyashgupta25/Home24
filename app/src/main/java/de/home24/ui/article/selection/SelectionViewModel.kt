@@ -42,7 +42,7 @@ class SelectionViewModel @Inject constructor(private val articleDataSource: Arti
     val articleList = MutableLiveData<Result<MutableList<ArticleTemplate>>>()
 
     //reviewed items for the review screen
-    var reviewList = mutableListOf<ArticleTemplate>()
+    val reviewList = mutableListOf<ArticleTemplate>()
 
     /**
      * this method calls the web service and fetches the ArticleTemplate requried for UI
@@ -156,7 +156,6 @@ class SelectionViewModel @Inject constructor(private val articleDataSource: Arti
         selectedArticle.set(ZERO)
         articleList.postValue(Result.loading())
         reviewList.clear()
-        reviewList = mutableListOf<ArticleTemplate>()
     }
 
     /**

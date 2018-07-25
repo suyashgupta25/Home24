@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="errorMessage"
+            type="java.lang.String" />
+
+        <variable
+            name="retryListener"
+            type="de.home24.ui.common.listeners.ErrorRetryListener" />
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/ll_error_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            app:srcCompat="@android:drawable/ic_dialog_alert" />
+
+        <TextView
+            android:id="@+id/tv_err_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/m_16dp"
+            android:layout_marginTop="@dimen/m_16dp"
+            android:gravity="center"
+            android:text="@{errorMessage}"
+            android:textColor="@android:color/darker_gray" />
+
+        <Button
+            android:id="@+id/btn_err_retry"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="@{() -> retryListener.retryClicked()}"
+            android:text="@string/lbl_err_retry"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+</layout>

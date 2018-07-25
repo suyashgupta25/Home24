@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CardSwipeView">
+
+        <attr name="max_visible_cards" format="integer" />
+        <attr name="card_layout" format="reference" />
+        <attr name="card_offsetX" format="dimension" />
+        <attr name="card_offsetY" format="dimension" />
+        <attr name="card_rotate_angle" format="float" />
+
+    </declare-styleable>
+</resources>

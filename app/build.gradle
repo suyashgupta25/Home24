@@ -1,0 +1,104 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    defaultConfig {
+        applicationId "de.home24"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        //Server URL added here so that it is configurable at build level and can separated
+        //based on bebug and release mode: Lets say Debug to dev server and Release to Prod
+        buildConfigField "String", "BASE_URL", "\"https://api-mobile.home24.com/\""
+        buildConfigField "String", "API_VER", "\"api/v2.0/\""
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    // Support Libs
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraint_layout"
+
+    // Kotlin and Arch Lifecycle
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlin_version"
+    implementation "androidx.core:core-ktx:$rootProject.ktx_core"
+    implementation "android.arch.lifecycle:extensions:$rootProject.lifecycle"
+    kapt "android.arch.lifecycle:compiler:$rootProject.lifecycle"
+    implementation "android.arch.lifecycle:reactivestreams:$rootProject.lifecycle"
+
+    //Common Annotations
+    implementation "javax.annotation:javax.annotation-api:$rootProject.common_annotations"
+
+    // Dependency Injection
+    implementation "com.google.dagger:dagger:$rootProject.dagger2Version"
+    implementation "com.google.dagger:dagger-android:$rootProject.dagger2Version"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.dagger2Version"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.dagger2Version"
+
+    // Networking
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofit"
+
+    // JSON Parsing
+    implementation "com.squareup.moshi:moshi:$rootProject.moshi"
+    implementation "com.squareup.moshi:moshi-kotlin:$rootProject.moshi"
+    implementation "com.squareup.retrofit2:converter-moshi:$rootProject.converter_moshi"
+    implementation "se.ansman.kotshi:api:$rootProject.kotshi"
+    kapt "se.ansman.kotshi:compiler:$rootProject.kotshi"
+
+    //Image loading and caching
+    implementation "com.github.bumptech.glide:glide:$rootProject.glide"
+    kapt "com.github.bumptech.glide:compiler:$rootProject.glide"
+
+    // FRP
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
+    implementation "io.reactivex.rxjava2:rxkotlin:$rootProject.rxkotlin"
+
+    // ThreeTenABP
+    implementation "com.jakewharton.threetenabp:threetenabp:$rootProject.threeTenABP"
+    implementation "com.android.support:multidex:$rootProject.multidex"
+
+    testImplementation "junit:junit:$rootProject.junitVersion"
+
+    androidTestImplementation "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
+    androidTestImplementation ("com.android.support.test:runner:$rootProject.supportTest") {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    androidTestImplementation ("com.android.support.test:rules:$rootProject.supportTest", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestImplementation ("com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion") {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+}
+

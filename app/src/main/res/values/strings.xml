@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Home24</string>
+
+    <!--Start Fragment -->
+    <string name="lbl_start_button">Start</string>
+
+    <!--Selection Fragment -->
+    <string name="lbl_toolbar_selection">Select articles</string>
+    <string name="lbl_err_retry">Retry</string>
+    <string name="param_review_bundle">paramReviewBundle</string>
+    <string name="err_selection_data_else">Error: Executing else block of selection screen</string>
+    <string name="err_no_data">Oops! it seems there are no more articles left to rate. Please try to review them</string>
+
+
+    <!--Review Fragment -->
+    <string name="lbl_toolbar_Review">Review</string>
+
+</resources>

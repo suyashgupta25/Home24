@@ -37,7 +37,8 @@
             android:layout_marginTop="@dimen/m_16dp"
             android:gravity="center"
             android:text="@{errorMessage}"
-            android:textColor="@android:color/darker_gray" />
+            android:textColor="@color/dark_gray"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btn_err_retry"

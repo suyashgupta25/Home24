@@ -42,7 +42,7 @@ class SelectionViewModel @Inject constructor(private val articleDataSource: Arti
     val articleList = MutableLiveData<Result<MutableList<ArticleTemplate>>>()
 
     //reviewed items for the review screen
-    val reviewList = mutableListOf<ArticleTemplate>()
+    var reviewList = mutableListOf<ArticleTemplate>()
 
     /**
      * this method calls the web service and fetches the ArticleTemplate requried for UI
@@ -76,20 +76,20 @@ class SelectionViewModel @Inject constructor(private val articleDataSource: Arti
     }
 
     /**
-     * increment liked article count
+     * update liked article count
      */
-    private fun incrementSelectedArticle(position: Int) {
-        selectedArticle.set(selectedArticle.get()!!.inc())
+    private fun incrementLikedArticle(position: Int, isLiked:Boolean) {
+        if (isLiked) selectedArticle.set(selectedArticle.get()!!.inc())
     }
 
     /**
-     * add liked item to review list and increment count
+     * add liked item to review list and update count
      */
-    fun addLikedItemToReviewListAndIncrementCount(position: Int) {
+    fun updateItemForReviewListAndUpdateLikedCount(position: Int, isLiked:Boolean) {
         val item = getItemFromLiveData(position)
-        item?.isLiked = true
+        item?.isLiked = isLiked
         addItemToReviewList(item)
-        incrementSelectedArticle(position)
+        incrementLikedArticle(position, isLiked)
     }
 
     /**
@@ -103,7 +103,7 @@ class SelectionViewModel @Inject constructor(private val articleDataSource: Arti
     /**
      * add item to review list
      */
-    fun addItemToReviewList(item:ArticleTemplate?) {
+    private fun addItemToReviewList(item:ArticleTemplate?) {
         item?.let { reviewList.add(it) }
     }
 
@@ -111,14 +111,14 @@ class SelectionViewModel @Inject constructor(private val articleDataSource: Arti
      * disliked item
      */
     override fun onCardSwipedLeft(position: Int) {
-        addItemToReviewList(position)
+        updateItemForReviewListAndUpdateLikedCount(position, false)
     }
 
     /**
      * liked item
      */
     override fun onCardSwipedRight(position: Int) {
-        addLikedItemToReviewListAndIncrementCount(position)
+        updateItemForReviewListAndUpdateLikedCount(position, true)
     }
 
     /**
@@ -143,12 +143,28 @@ class SelectionViewModel @Inject constructor(private val articleDataSource: Arti
      * retry the selection of articles
      */
     override fun retryClicked() {
+        reset()
+        callWebservice()
+    }
+
+    /**
+     * resets the views and clears the review data
+     */
+    private fun reset() {
         showEmptyDeckInfo.postValue(false)
         isReviewButtonEnabled.set(false)
         selectedArticle.set(ZERO)
         articleList.postValue(Result.loading())
         reviewList.clear()
-        callWebservice()
+        reviewList = mutableListOf<ArticleTemplate>()
+    }
+
+    /**
+     * resets the views, clears the review data and shows the selection screen from start
+     */
+    fun resetDeck() {
+        reset()
+        articleList.postValue(articleList.value)
     }
 
     /**

@@ -54,8 +54,8 @@ class SelectionFragment : BaseFragment() {
     private fun initBinding(view: View) {
         val binding = DataBindingUtil.bind<FragmentSelectionBinding>(view)
         lifecycle.addObserver(viewModel)
-        binding?.like?.setOnClickListener { viewModel.addLikedItemToReviewListAndIncrementCount(binding?.csvArticles?.onClickRight()!!) }
-        binding?.dislike?.setOnClickListener { viewModel.addItemToReviewList(binding?.csvArticles?.onClickLeft()!!) }
+        binding?.like?.setOnClickListener { viewModel.updateItemForReviewListAndUpdateLikedCount(binding?.csvArticles?.onClickRight()!!, true) }
+        binding?.dislike?.setOnClickListener { viewModel.updateItemForReviewListAndUpdateLikedCount(binding?.csvArticles?.onClickLeft()!!, false) }
         initializeDeck(binding?.csvArticles)
         binding.let {
             it!!.viewModel = viewModel
@@ -87,7 +87,7 @@ class SelectionFragment : BaseFragment() {
             }
         })
         viewModel.showEmptyDeckInfo.observe(this, Observer { value: Boolean? ->
-            if (value!!) showError(Throwable(getString(R.string.err_no_data)))
+            if (value!!) { showSelectionCompleteView() }
         })
 
         viewModel.reviewBtnClicked.observe(this, Observer {
@@ -113,6 +113,8 @@ class SelectionFragment : BaseFragment() {
     private fun showSuccessData(data: MutableList<ArticleTemplate>) {
         val binding = view?.let { DataBindingUtil.bind<FragmentSelectionBinding>(it) }
         binding?.csvArticles?.resetFromStart()
+        binding?.llReviewComplete?.visibility = View.INVISIBLE
+        binding?.rlSelectionRoot?.visibility = View.VISIBLE
         adapter = SelectionAdapter(activity!!.applicationContext, data)
         binding?.csvArticles?.adapter = adapter
         viewModel.onSuccessResponse(data.size)
@@ -121,5 +123,11 @@ class SelectionFragment : BaseFragment() {
     private fun showError(message: Throwable) {
         viewModel.isLoading.set(false)
         viewModel.errorMsg.set(message.localizedMessage)
+    }
+
+    private fun showSelectionCompleteView() {
+        val binding = view?.let { DataBindingUtil.bind<FragmentSelectionBinding>(it) }
+        binding?.llReviewComplete?.visibility = View.VISIBLE
+        binding?.rlSelectionRoot?.visibility = View.INVISIBLE
     }
 }

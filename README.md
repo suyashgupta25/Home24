@@ -13,4 +13,5 @@ Features:
 1) This a article selection app with configurable article count (Default 10). The count can be change in the AppConstants.kt file.
 2) The selection screen has both functionality of swipe-left for dislike and swipe-right for like. Also an alternate way of doing it is via buttons at the bottom
 3) The liked articles are shown with a star icon.
+4) Caching feature which save the data in local
 

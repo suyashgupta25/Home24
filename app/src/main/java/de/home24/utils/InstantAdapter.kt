@@ -1,10 +1,12 @@
 package de.home24.utils
 
+import android.graphics.Point
 import com.squareup.moshi.FromJson
+import com.squareup.moshi.JsonReader
+import com.squareup.moshi.JsonWriter
 import com.squareup.moshi.ToJson
-import org.threeten.bp.Instant
-import org.threeten.bp.ZoneId
-import org.threeten.bp.format.DateTimeFormatter.ISO_INSTANT
+import java.io.IOException
+
 
 /**
  * Created by suyashg on 21/07/18.
@@ -19,9 +21,21 @@ class InstantAdapter {
     }
 
     @ToJson
-    fun toJson(time: Instant): String = ISO_INSTANT.format(time)
+    @Throws(IOException::class)
+    fun pointToJson(writer: JsonWriter, point: Point) {
+        writer.beginArray()
+        writer.value(point.x)
+        writer.value(point.y)
+        writer.endArray()
+    }
 
     @FromJson
-    fun fromJson(time: String): Instant =
-            ISO_INSTANT.parse(time, Instant.FROM).atZone(ZoneId.systemDefault()).toInstant()
+    @Throws(Exception::class)
+    fun pointFromJson(reader: JsonReader): Point {
+        reader.beginArray()
+        val x = reader.nextInt()
+        val y = reader.nextInt()
+        reader.endArray()
+        return Point(x, y)
+    }
 }

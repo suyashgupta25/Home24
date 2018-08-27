@@ -58,9 +58,6 @@ ext {
     rxandroidVersion = '2.0.2'
     rxkotlin = '2.2.0'
 
-    threeTenABP = '1.0.5'
-    multidex = '1.0.1'
-
     // Test dependencies
     junitVersion = '4.12'
     supportTest = '1.0.2'

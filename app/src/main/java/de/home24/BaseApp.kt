@@ -1,11 +1,10 @@
 package de.home24
 
 import android.content.Context
-import android.support.multidex.MultiDex
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
-import de.home24.di.NetworkModule
 import de.home24.di.DaggerAppComponent
+import de.home24.di.NetworkModule
 
 /**
  * Created by suyashg on 19/07/18.
@@ -16,7 +15,6 @@ open class BaseApp : DaggerApplication() {
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
-        MultiDex.install(this);
         androidInjector = DaggerAppComponent.builder()
                 .application(this)
                 .network(networkModule())

@@ -11,7 +11,6 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         //Server URL added here so that it is configurable at build level and can separated
@@ -69,10 +68,8 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofit"
 
     // JSON Parsing
-    implementation "com.squareup.moshi:moshi:$rootProject.moshi"
-    implementation "com.squareup.moshi:moshi-kotlin:$rootProject.moshi"
-    implementation "com.squareup.retrofit2:converter-moshi:$rootProject.converter_moshi"
     implementation "se.ansman.kotshi:api:$rootProject.kotshi"
+    implementation "com.squareup.retrofit2:converter-moshi:$rootProject.converter_moshi"
     kapt "se.ansman.kotshi:compiler:$rootProject.kotshi"
 
     //Image loading and caching
@@ -83,10 +80,6 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
     implementation "io.reactivex.rxjava2:rxkotlin:$rootProject.rxkotlin"
-
-    // ThreeTenABP
-    implementation "com.jakewharton.threetenabp:threetenabp:$rootProject.threeTenABP"
-    implementation "com.android.support:multidex:$rootProject.multidex"
 
     testImplementation "junit:junit:$rootProject.junitVersion"
 

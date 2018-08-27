@@ -13,13 +13,13 @@ class ArticleDataSource @Inject constructor(private val articleService: ArticleS
      * Processes the data received from server according to UI requirements
      * since we need only title and name of article so its filtered here.
      */
-    fun getArticles(): Flowable<MutableList<ArticleTemplate>>? {
+    fun getArticles(): Observable<MutableList<ArticleTemplate>>? {
         return articleService.getArticles()
                 .flatMap { listitem: ArticleListResponse ->
                     Observable.fromIterable(listitem.embedded?.articles)
                             .map { item: Article ->
                                 ArticleTemplate(item?.title, item.media?.get(0)?.uri)
-                            }.toList().toFlowable()
+                            }.toList().toObservable()
                 }
     }
 }

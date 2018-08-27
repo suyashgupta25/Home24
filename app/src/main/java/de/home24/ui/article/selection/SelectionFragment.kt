@@ -27,7 +27,7 @@ import javax.inject.Inject
  */
 class SelectionFragment : BaseFragment() {
 
-    private val TAG = SelectionFragment::class.qualifiedName
+//    private val TAG = SelectionFragment::class.qualifiedName
 
     private var adapter: SelectionAdapter? = null
 
@@ -82,7 +82,7 @@ class SelectionFragment : BaseFragment() {
                     showError(t.message)
                 }
                 else -> {
-                    Log.e(TAG, getString(R.string.err_selection_data_else))
+                    Log.e("TAG", getString(R.string.err_selection_data_else))
                 }
             }
         })
